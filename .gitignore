@@ -25,3 +25,4 @@ replay_pid*
 /BCWellnesDesktop/nbproject/private/
 
 !lib/*.jar
+/build/
