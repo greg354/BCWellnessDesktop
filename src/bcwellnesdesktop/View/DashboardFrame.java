@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 
@@ -109,9 +110,14 @@ public class DashboardFrame extends javax.swing.JFrame {
 
         return panel;
     }
-
+    public static DBConnection db = new DBConnection();
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new DashboardFrame().setVisible(true));
+        try{
+            db.connect();
+        }catch(ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
     }
 
    

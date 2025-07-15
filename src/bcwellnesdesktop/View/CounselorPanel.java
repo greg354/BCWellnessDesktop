@@ -15,6 +15,11 @@ public class CounselorPanel extends javax.swing.JPanel {
      * Creates new form CounselorPanel
      */
     public CounselorPanel() {
+        String[] colnames={"CouncellorNum","Full Name","Speciality","Avalablility"};
+        Object[][] data={
+            {"C010169420","Eddy Murphy","Student grades","Yes"},
+            {"C020269420","Napoléon Bonaparte","Student Depression","No"}
+        };
          setBackground(new Color(60, 63, 65));
         setLayout(new BorderLayout(10, 10));
 
@@ -28,11 +33,27 @@ public class CounselorPanel extends javax.swing.JPanel {
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
 
-        JLabel placeholderLabel = new JLabel("Counselor table gos here.");
-        placeholderLabel.setForeground(Color.LIGHT_GRAY);
-        placeholderLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        JTable tblapp = new JTable(data,colnames); //creating the table
+        tblapp.setFillsViewportHeight(true); //table aesthetics
+        tblapp.setBackground(new Color(80, 80, 80));
+        tblapp.setForeground(Color.WHITE);
+        tblapp.setGridColor(Color.DARK_GRAY);
+        tblapp.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tblapp.setRowHeight(24);
+        
+        JScrollPane scrp = new JScrollPane(tblapp); //adding scroll to our table for better experience
+        scrp.setPreferredSize(new Dimension(600,300));
+        
+        GridBagConstraints gbc = new GridBagConstraints(); //Otherwise the table is a small block, now we fit it into the grid
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;
 
-        centerPanel.add(placeholderLabel);
+        centerPanel.add(scrp, gbc); //adding to the panel
+        
         add(centerPanel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();

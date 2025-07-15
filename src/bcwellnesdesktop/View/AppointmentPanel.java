@@ -5,6 +5,7 @@
 package bcwellnesdesktop.View;
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,6 +17,10 @@ public class AppointmentPanel extends javax.swing.JPanel {
      * Creates new form AppointmentPanel
      */
     public AppointmentPanel() {
+        String[] colnames={"AppointmentNum","StudentNum","Councelor","Reason","Date","Time","Status"};
+        Object[][] data={
+            {1,"600166","Eddy Murphy","Bad grades","2025-07-23","10:00 AM","Confirmed"},
+        };
         setBackground(new Color(60, 63, 65));
         setLayout(new BorderLayout(10, 10));
 
@@ -30,11 +35,26 @@ public class AppointmentPanel extends javax.swing.JPanel {
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
 
-        JLabel placeholderLabel = new JLabel("Appointment table gos here.");
-        placeholderLabel.setForeground(Color.LIGHT_GRAY);
-        placeholderLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        JTable tblapp = new JTable(data,colnames); //creating the table
+        tblapp.setFillsViewportHeight(true); //table aesthetics 
+        tblapp.setBackground(new Color(80, 80, 80));
+        tblapp.setForeground(Color.WHITE);
+        tblapp.setGridColor(Color.DARK_GRAY);
+        tblapp.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tblapp.setRowHeight(24);
+        
+        JScrollPane scrp = new JScrollPane(tblapp); //adding scroll to our table for better experience
+        scrp.setPreferredSize(new Dimension(600,300));
+        
+        GridBagConstraints gbc = new GridBagConstraints(); //Otherwise the table is a small block, now we fit it into the grid
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;
 
-        centerPanel.add(placeholderLabel);
+        centerPanel.add(scrp, gbc);//adding to the panel
 
         add(centerPanel, BorderLayout.CENTER);
 
@@ -51,6 +71,9 @@ public class AppointmentPanel extends javax.swing.JPanel {
         buttonPanel.add(btnDelete);
 
         add(buttonPanel, BorderLayout.SOUTH);
+        
+
+        
     }
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
