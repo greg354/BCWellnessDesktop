@@ -4,6 +4,7 @@
  */
 package bcwellnesdesktop.View;
 import bcwellnesdesktop.Controller.ApointmentController;
+import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,10 +23,9 @@ public class AppointmentPanel extends javax.swing.JPanel {
      * Creates new form AppointmentPanel
      */
     public AppointmentPanel() {
-        String[] colnames={"AppointmentNum","StudentNum","Councelor","Reason","Date","Time","Status"};
-        Object[][] data={
-            {1,"600166","Eddy Murphy","Bad grades","2025-07-23","10:00 AM","Confirmed"},
-        };
+        ApointmentController ac = new ApointmentController();
+        String[] colnames = {"ID", "Student Name", "Councelor Name", "Date", "Time", "Status"};
+        Object[][] data = ac.appview().toArray(new Object[0][]);
         setBackground(new Color(60, 63, 65));
         setLayout(new BorderLayout(10, 10));
 
@@ -40,13 +40,19 @@ public class AppointmentPanel extends javax.swing.JPanel {
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
 
+        
         tblapp = new JTable(data,colnames); //creating the table
+
+         
+        
+
         tblapp.setFillsViewportHeight(true); //table aesthetics 
         tblapp.setBackground(new Color(80, 80, 80));
         tblapp.setForeground(Color.WHITE);
         tblapp.setGridColor(Color.DARK_GRAY);
         tblapp.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         tblapp.setRowHeight(24);
+
         
         JScrollPane scrp = new JScrollPane(tblapp); //adding scroll to our table for better experience
         scrp.setPreferredSize(new Dimension(600,300));
@@ -75,6 +81,30 @@ public class AppointmentPanel extends javax.swing.JPanel {
             form.setVisible(true);
         });
         btnEdit = createStyledButton("Edit Appointment");
+        btnEdit.addActionListener(e -> {
+            
+            int selectedRow = tblapp.getSelectedRow();
+        if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select an appointment to edit.");
+        return;
+        }
+        int id =  Integer.parseInt((String) tblapp.getValueAt(selectedRow, 0)) ;
+        String studentNumber = (String) tblapp.getValueAt(selectedRow, 1);
+        String counselor = (String) tblapp.getValueAt(selectedRow, 2);
+        String date = (String) tblapp.getValueAt(selectedRow, 3);
+        String time = (String) tblapp.getValueAt(selectedRow, 4);
+        String status = (String) tblapp.getValueAt(selectedRow, 5);
+        
+        AppointmentInput frame = new AppointmentInput();
+        
+        frame.txtStudentNum.setText(studentNumber);
+        frame.txtCounselor.setText(counselor);
+        frame.txtDate.setText(date);
+        frame.txtTime.setText(time);
+        frame.cmbStatus.setSelectedItem(status);
+        
+        frame.setVisible(true);
+        });
         btnDelete = createStyledButton("Delete Appointment");
 
         buttonPanel.add(btnAdd);
@@ -82,7 +112,8 @@ public class AppointmentPanel extends javax.swing.JPanel {
         buttonPanel.add(btnDelete);
 
         add(buttonPanel, BorderLayout.SOUTH);
-        ApointmentController controller = new ApointmentController(this);
+        
+        /*controller.loadAppointments();*/
 
         
     }

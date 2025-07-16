@@ -4,45 +4,65 @@
  */
 package bcwellnesdesktop.Controller;
 
+
 import bcwellnesdesktop.View.AppointmentPanel;
 import bcwellnesdesktop.View.AppointmentInput;
 import javax.swing.*;
+import javax.swing.table.*;
+import bcwellnesdesktop.DBConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
+
 /**
  *
  * @author marku
  */
 public class ApointmentController {
+
     protected AppointmentPanel view;
-    
-    public ApointmentController(AppointmentPanel view){
-        this.view = view;
-        this.view.getEditApp().addActionListener(e -> handleEdit());
-    }
-    
-    private void handleEdit(){
-        JTable table = view.getTableApp();
-        int selectedRow = table.getSelectedRow();
-        if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(view, "Please select an appointment to edit.");
-        return;
+    Connection con;
+    DBConnection db = new DBConnection();
+    public ApointmentController(){
+       
+        try {
+            db.connect();
+            con = db.getcon();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        int id = (Integer) table.getValueAt(selectedRow, 0);
-        String studentNumber = (String) table.getValueAt(selectedRow, 1);
-        String counselor = (String) table.getValueAt(selectedRow, 2);
-        String reason = (String) table.getValueAt(selectedRow, 3);
-        String date = (String) table.getValueAt(selectedRow, 4);
-        String time = (String) table.getValueAt(selectedRow, 5);
-        String status = (String) table.getValueAt(selectedRow, 6);
-        
-        AppointmentInput frame = new AppointmentInput();
-        
-        frame.txtStudentNum.setText(studentNumber);
-        frame.txtCounselor.setText(counselor);
-        frame.txtReason.setText(reason);
-        frame.txtDate.setText(date);
-        frame.txtTime.setText(time);
-        frame.cmbStatus.setSelectedItem(status);
-        
-        frame.setVisible(true);
     }
+    
+   
+
+    
+    
+    public ArrayList<String[]> appview(){
+        ArrayList<String[]> dlist = new ArrayList<>();
+        try{
+            String qry = "SELECT * FROM APPOINTMENTS";
+            ResultSet table = this.con.createStatement().executeQuery(qry);
+            while(table.next()){
+               String ID = table.getString("ID");
+               String stdname = table.getString("STUDENTNAME");
+               String cname = table.getString("COUNSELORNAME");
+               String date = table.getString("APPOINTMENTDATE");
+               String time = table.getString("APPOINTMENTTIME");
+               String status = table.getString("STATUS");
+               
+               String[] row = {ID,stdname,cname,date,time,status};
+               dlist.add(row);
+            }
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return dlist;
+    }
+
+    
+
 }

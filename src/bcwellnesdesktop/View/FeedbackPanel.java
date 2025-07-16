@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.Controller.FeedbackController;
+import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -19,11 +21,9 @@ public class FeedbackPanel extends javax.swing.JPanel {
      * Creates new form FeedbackPanel
      */
     public FeedbackPanel() {
-        String[] colnames={"Num","StudentNum","Full Name","Helped By","Short Description"};
-        Object[][] data={
-            {1,"600166","Iwan Rademan The beast","Eddy Murphy","He toutched me"},
-            {2,"694201","Sam Wily Smith","Napoléon Bonaparte","There is nothing we can do.. La victoire en chantant nous ouvre la barrière, la liberté guide nos pas, et du Nord au Midi la trompette guerrière a sonné l'heure des combats."}
-        };
+        FeedbackController fc = new FeedbackController();
+        String[] colnames={"ID","Student Name","Rating","Comments"};
+        Object[][] data = fc.fview().toArray(new Object[0][]);
         setBackground(new Color(60, 63, 65));
         setLayout(new BorderLayout(10, 10));
 

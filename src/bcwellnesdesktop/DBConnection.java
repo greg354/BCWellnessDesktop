@@ -6,6 +6,8 @@ package bcwellnesdesktop;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.ResultSet;
 
 /**
  *
@@ -31,7 +33,9 @@ public class DBConnection {
             ex.printStackTrace();
         }
     }
-       
+    public Connection getcon(){
+        return con;
+    }
 }
    
    

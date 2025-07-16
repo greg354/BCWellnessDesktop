@@ -26,3 +26,5 @@ replay_pid*
 
 !lib/*.jar
 /build/
+/nbproject/private/
+/dist/

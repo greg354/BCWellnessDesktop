@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.Controller.CounselorController;
+import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -18,11 +20,10 @@ public class CounselorPanel extends javax.swing.JPanel {
      * Creates new form CounselorPanel
      */
     public CounselorPanel() {
-        String[] colnames={"CouncellorNum","Full Name","Speciality","Avalablility"};
-        Object[][] data={
-            {"C010169420","Eddy Murphy","Student grades","Yes"},
-            {"C020269420","Napoléon Bonaparte","Student Depression","No"}
-        };
+        CounselorController councontroller = new CounselorController();
+        String[] colnames={"ID","Counselor Name","Specialization","Availability"};
+        Object[][] data = councontroller.cview().toArray(new Object[0][]);
+        
          setBackground(new Color(60, 63, 65));
         setLayout(new BorderLayout(10, 10));
 
@@ -80,6 +81,8 @@ public class CounselorPanel extends javax.swing.JPanel {
         buttonPanel.add(btnDelete);
 
         add(buttonPanel, BorderLayout.SOUTH);
+        
+        /*controller.loadCounselors();*/
     }
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
@@ -90,7 +93,18 @@ public class CounselorPanel extends javax.swing.JPanel {
         button.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
         return button;
     }
-
+    public JTable getTableCoun(){
+        return tblapp;
+    }
+    public JButton getAddCoun(){
+        return btnAdd;
+    }
+    public JButton getEditCoun(){
+        return btnEdit;
+    }
+    public JButton getDeleteCoun(){
+        return btnDelete;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
