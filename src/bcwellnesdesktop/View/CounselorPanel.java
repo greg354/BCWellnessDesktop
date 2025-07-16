@@ -10,7 +10,10 @@ import java.awt.*;
  * @author marku
  */
 public class CounselorPanel extends javax.swing.JPanel {
-
+    private JTable tblapp;
+    private JButton btnAdd;
+    private JButton btnEdit;
+    private JButton btnDelete;
     /**
      * Creates new form CounselorPanel
      */
@@ -33,7 +36,7 @@ public class CounselorPanel extends javax.swing.JPanel {
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
 
-        JTable tblapp = new JTable(data,colnames); //creating the table
+        tblapp = new JTable(data,colnames); //creating the table
         tblapp.setFillsViewportHeight(true); //table aesthetics
         tblapp.setBackground(new Color(80, 80, 80));
         tblapp.setForeground(Color.WHITE);
@@ -60,17 +63,17 @@ public class CounselorPanel extends javax.swing.JPanel {
         buttonPanel.setBackground(new Color(60, 63, 65));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        JButton btnAdd = createStyledButton("Add Counselor");
+        btnAdd = createStyledButton("Add Counselor");
         btnAdd.addActionListener(e -> {
             CounselorInput form = new CounselorInput();
             form.setVisible(true);
         });
-        JButton btnEdit = createStyledButton("Edit Counselor");
+        btnEdit = createStyledButton("Edit Counselor");
         btnEdit.addActionListener(e -> {
             CounselorInput form = new CounselorInput();
             form.setVisible(true);
         });
-        JButton btnDelete = createStyledButton("Delete Counselor");
+        btnDelete = createStyledButton("Delete Counselor");
 
         buttonPanel.add(btnAdd);
         buttonPanel.add(btnEdit);

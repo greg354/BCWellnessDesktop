@@ -10,7 +10,11 @@ import java.awt.*;
  * @author marku
  */
 public class FeedbackPanel extends javax.swing.JPanel {
-
+    private JTable tblapp;
+    private JButton btnView;
+    private JButton btnEdit;
+    private JButton btnDelete;
+    
     /**
      * Creates new form FeedbackPanel
      */
@@ -33,7 +37,7 @@ public class FeedbackPanel extends javax.swing.JPanel {
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
 
-        JTable tblapp = new JTable(data,colnames); //creating the table
+        tblapp = new JTable(data,colnames); //creating the table
         tblapp.setFillsViewportHeight(true); //table aesthetics
         tblapp.setBackground(new Color(80, 80, 80));
         tblapp.setForeground(Color.WHITE);
@@ -59,23 +63,35 @@ public class FeedbackPanel extends javax.swing.JPanel {
         buttonPanel.setBackground(new Color(60, 63, 65));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        JButton btnView = createStyledButton("Add Feedback");
+        btnView = createStyledButton("Add Feedback");
         btnView.addActionListener(e -> {
             FeedbackInput form = new FeedbackInput();
             form.setVisible(true);
         });
-        JButton btnEdit = createStyledButton("Edit Feedback");
+        btnEdit = createStyledButton("Edit Feedback");
         btnEdit.addActionListener(e -> {
             FeedbackInput form = new FeedbackInput();
             form.setVisible(true);
         });
-        JButton btnDelete = createStyledButton("Delete Feedback");
+        btnDelete = createStyledButton("Delete Feedback");
 
         buttonPanel.add(btnView);
         buttonPanel.add(btnEdit);
         buttonPanel.add(btnDelete);
 
         add(buttonPanel, BorderLayout.SOUTH);
+    }
+    public JTable getTableFeed() {
+    return tblapp;
+    }
+    public JButton getAddFeed(){
+        return btnView;
+    }
+    public JButton getEditFeed(){
+        return btnEdit;
+    }
+    public JButton getDeleteFeed(){
+        return btnDelete;
     }
      private JButton createStyledButton(String text) {
         JButton button = new JButton(text);

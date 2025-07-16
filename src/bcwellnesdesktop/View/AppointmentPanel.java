@@ -12,7 +12,11 @@ import javax.swing.table.DefaultTableModel;
  * @author marku
  */
 public class AppointmentPanel extends javax.swing.JPanel {
-
+    private JTable tblapp;
+    private JButton btnEdit;
+    private JButton btnAdd;
+    private JButton btnDelete;
+    
     /**
      * Creates new form AppointmentPanel
      */
@@ -35,7 +39,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
 
-        JTable tblapp = new JTable(data,colnames); //creating the table
+        tblapp = new JTable(data,colnames); //creating the table
         tblapp.setFillsViewportHeight(true); //table aesthetics 
         tblapp.setBackground(new Color(80, 80, 80));
         tblapp.setForeground(Color.WHITE);
@@ -62,17 +66,16 @@ public class AppointmentPanel extends javax.swing.JPanel {
         buttonPanel.setBackground(new Color(60, 63, 65));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        JButton btnAdd = createStyledButton("Add Appointment");
+        btnAdd = createStyledButton("Add Appointment");
         btnAdd.addActionListener(e -> {
             AppointmentInput form = new AppointmentInput();
             form.setVisible(true);
         });
-        JButton btnEdit = createStyledButton("Edit Appointment");
-        btnEdit.addActionListener(e -> {
-            AppointmentInput form = new AppointmentInput();
-            form.setVisible(true);
+        btnEdit = createStyledButton("Edit Appointment");
+        btnEdit.addActionListener(e -> { 
+            
         });
-        JButton btnDelete = createStyledButton("Delete Appointment");
+        btnDelete = createStyledButton("Delete Appointment");
 
         buttonPanel.add(btnAdd);
         buttonPanel.add(btnEdit);
@@ -82,6 +85,18 @@ public class AppointmentPanel extends javax.swing.JPanel {
         
 
         
+    }
+    public JTable getTableApp() {
+    return tblapp;
+    }
+    public JButton getAddApp(){
+        return btnAdd;
+    }
+    public JButton getEditApp(){
+        return btnEdit;
+    }
+    public JButton getDeleteApp(){
+        return btnDelete;
     }
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
