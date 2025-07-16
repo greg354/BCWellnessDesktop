@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -15,11 +16,15 @@ public class CounselorPanel extends javax.swing.JPanel {
      * Creates new form CounselorPanel
      */
     public CounselorPanel() {
-        String[] colnames={"CouncellorNum","Full Name","Speciality","Avalablility"};
-        Object[][] data={
-            {"C010169420","Eddy Murphy","Student grades","Yes"},
-            {"C020269420","Napoléon Bonaparte","Student Depression","No"}
-        };
+        DBConnection db = new DBConnection();
+        try{
+            db.connect();
+        }catch(ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        String[] colnames={"ID","Counselor Name","Specialization","Availability"};
+        Object[][] data = db.cview().toArray(new Object[0][]);
+        
          setBackground(new Color(60, 63, 65));
         setLayout(new BorderLayout(10, 10));
 

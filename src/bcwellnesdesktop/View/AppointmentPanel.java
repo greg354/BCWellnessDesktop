@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,10 +18,14 @@ public class AppointmentPanel extends javax.swing.JPanel {
      * Creates new form AppointmentPanel
      */
     public AppointmentPanel() {
-        String[] colnames={"AppointmentNum","StudentNum","Councelor","Reason","Date","Time","Status"};
-        Object[][] data={
-            {1,"600166","Eddy Murphy","Bad grades","2025-07-23","10:00 AM","Confirmed"},
-        };
+        DBConnection db = new DBConnection();
+        try{
+            db.connect();
+        }catch(ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        String[] colnames={"ID","Student Name","Councelor Name","Date","Time","Status"};
+        Object[][] data = db.appview().toArray(new Object[0][]);
         setBackground(new Color(60, 63, 65));
         setLayout(new BorderLayout(10, 10));
 
@@ -34,7 +39,8 @@ public class AppointmentPanel extends javax.swing.JPanel {
         JPanel centerPanel = new JPanel();
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
-
+         
+        
         JTable tblapp = new JTable(data,colnames); //creating the table
         tblapp.setFillsViewportHeight(true); //table aesthetics 
         tblapp.setBackground(new Color(80, 80, 80));
@@ -42,6 +48,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         tblapp.setGridColor(Color.DARK_GRAY);
         tblapp.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         tblapp.setRowHeight(24);
+
         
         JScrollPane scrp = new JScrollPane(tblapp); //adding scroll to our table for better experience
         scrp.setPreferredSize(new Dimension(600,300));
