@@ -63,7 +63,15 @@ public class AppointmentPanel extends javax.swing.JPanel {
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
         JButton btnAdd = createStyledButton("Add Appointment");
+        btnAdd.addActionListener(e -> {
+            AppointmentInput form = new AppointmentInput();
+            form.setVisible(true);
+        });
         JButton btnEdit = createStyledButton("Edit Appointment");
+        btnEdit.addActionListener(e -> {
+            AppointmentInput form = new AppointmentInput();
+            form.setVisible(true);
+        });
         JButton btnDelete = createStyledButton("Delete Appointment");
 
         buttonPanel.add(btnAdd);

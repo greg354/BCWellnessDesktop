@@ -59,12 +59,20 @@ public class FeedbackPanel extends javax.swing.JPanel {
         buttonPanel.setBackground(new Color(60, 63, 65));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        JButton btnView = createStyledButton("View Feedback");
-        JButton btnRespond = createStyledButton("Respond");
+        JButton btnView = createStyledButton("Add Feedback");
+        btnView.addActionListener(e -> {
+            FeedbackInput form = new FeedbackInput();
+            form.setVisible(true);
+        });
+        JButton btnEdit = createStyledButton("Edit Feedback");
+        btnEdit.addActionListener(e -> {
+            FeedbackInput form = new FeedbackInput();
+            form.setVisible(true);
+        });
         JButton btnDelete = createStyledButton("Delete Feedback");
 
         buttonPanel.add(btnView);
-        buttonPanel.add(btnRespond);
+        buttonPanel.add(btnEdit);
         buttonPanel.add(btnDelete);
 
         add(buttonPanel, BorderLayout.SOUTH);

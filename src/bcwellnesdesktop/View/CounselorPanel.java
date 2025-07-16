@@ -61,7 +61,15 @@ public class CounselorPanel extends javax.swing.JPanel {
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
         JButton btnAdd = createStyledButton("Add Counselor");
+        btnAdd.addActionListener(e -> {
+            CounselorInput form = new CounselorInput();
+            form.setVisible(true);
+        });
         JButton btnEdit = createStyledButton("Edit Counselor");
+        btnEdit.addActionListener(e -> {
+            CounselorInput form = new CounselorInput();
+            form.setVisible(true);
+        });
         JButton btnDelete = createStyledButton("Delete Counselor");
 
         buttonPanel.add(btnAdd);
