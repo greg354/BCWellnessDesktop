@@ -36,28 +36,6 @@ public class DBConnection {
     public Connection getcon(){
         return con;
     }
-    public ArrayList<String[]> appview(){
-        ArrayList<String[]> dlist = new ArrayList<>();
-        try{
-            String qry = "SELECT * FROM APPOINTMENTS";
-            ResultSet table = this.con.createStatement().executeQuery(qry);
-            while(table.next()){
-               String ID = table.getString("ID");
-               String stdname = table.getString("STUDENTNAME");
-               String cname = table.getString("COUNSELORNAME");
-               String date = table.getString("APPOINTMENTDATE");
-               String time = table.getString("APPOINTMENTTIME");
-               String status = table.getString("STATUS");
-               
-               String[] row = {ID,stdname,cname,date,time,status};
-               dlist.add(row);
-            }
-            
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return dlist;
-    }
 }
    
    

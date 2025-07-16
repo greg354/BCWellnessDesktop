@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.Controller.ApointmentController;
 import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
@@ -18,14 +19,9 @@ public class AppointmentPanel extends javax.swing.JPanel {
      * Creates new form AppointmentPanel
      */
     public AppointmentPanel() {
-        DBConnection db = new DBConnection();
-        try{
-            db.connect();
-        }catch(ClassNotFoundException ex){
-            ex.printStackTrace();
-        }
+        ApointmentController ac = new ApointmentController();
         String[] colnames={"ID","Student Name","Councelor Name","Date","Time","Status"};
-        Object[][] data = db.appview().toArray(new Object[0][]);
+        Object[][] data = ac.appview().toArray(new Object[0][]);
         setBackground(new Color(60, 63, 65));
         setLayout(new BorderLayout(10, 10));
 
