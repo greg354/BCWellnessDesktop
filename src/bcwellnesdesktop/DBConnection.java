@@ -33,6 +33,9 @@ public class DBConnection {
             ex.printStackTrace();
         }
     }
+    public Connection getcon(){
+        return con;
+    }
     public ArrayList<String[]> appview(){
         ArrayList<String[]> dlist = new ArrayList<>();
         try{
@@ -73,28 +76,7 @@ public class DBConnection {
             ex.printStackTrace();
         }
         return dlist;
-    }
-    public ArrayList<String[]> fview(){
-        ArrayList<String[]> dlist = new ArrayList<>();
-        try{
-            String qry = "SELECT * FROM FEEDBACK";
-            ResultSet table = this.con.createStatement().executeQuery(qry);
-            while(table.next()){
-               String ID = table.getString("ID");
-               String stdname = table.getString("STUDENTNAME");
-               String cname = table.getString("RATING");
-               String date = table.getString("COMMENTS");
-               
-               String[] row = {ID,stdname,cname,date};
-               dlist.add(row);
-            }
-            
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return dlist;
-    }
-       
+    }  
 }
    
    

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.Controller.FeedbackController;
 import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
@@ -16,14 +17,9 @@ public class FeedbackPanel extends javax.swing.JPanel {
      * Creates new form FeedbackPanel
      */
     public FeedbackPanel() {
-        DBConnection db = new DBConnection();
-        try{
-            db.connect();
-        }catch(ClassNotFoundException ex){
-            ex.printStackTrace();
-        }
+        FeedbackController fc = new FeedbackController();
         String[] colnames={"ID","Student Name","Rating","Comments"};
-        Object[][] data = db.fview().toArray(new Object[0][]);
+        Object[][] data = fc.fview().toArray(new Object[0][]);
         setBackground(new Color(60, 63, 65));
         setLayout(new BorderLayout(10, 10));
 
