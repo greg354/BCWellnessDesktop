@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public class DBConnection {
     private static final String DRIVER = "org.apache.derby.jdbc.ClientDriver";
-    private static final String JDBC_URL = "jdbc:derby://localhost:1527/studentDB";
+    private static final String JDBC_URL = "jdbc:derby://localhost:1527/WelllnessDB";
     
     Connection con;
     
@@ -23,7 +23,7 @@ public class DBConnection {
     public void connect() throws ClassNotFoundException{
         try{
             Class.forName(DRIVER);
-            this.con = DriverManager.getConnection(JDBC_URL,"admin1","12345");
+            this.con = DriverManager.getConnection(JDBC_URL,"admin1","1101");
             if(this.con != null){
                 System.out.println("Connected to the database!");
             }
