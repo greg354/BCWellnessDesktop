@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.Controller.ApointmentController;
 import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;

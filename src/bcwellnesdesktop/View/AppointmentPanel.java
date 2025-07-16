@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.Controller.ApointmentController;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
@@ -66,15 +67,14 @@ public class AppointmentPanel extends javax.swing.JPanel {
         buttonPanel.setBackground(new Color(60, 63, 65));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
+        
+        
         btnAdd = createStyledButton("Add Appointment");
         btnAdd.addActionListener(e -> {
             AppointmentInput form = new AppointmentInput();
             form.setVisible(true);
         });
         btnEdit = createStyledButton("Edit Appointment");
-        btnEdit.addActionListener(e -> { 
-            
-        });
         btnDelete = createStyledButton("Delete Appointment");
 
         buttonPanel.add(btnAdd);
@@ -82,7 +82,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         buttonPanel.add(btnDelete);
 
         add(buttonPanel, BorderLayout.SOUTH);
-        
+        ApointmentController controller = new ApointmentController(this);
 
         
     }
