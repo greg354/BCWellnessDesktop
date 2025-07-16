@@ -20,7 +20,7 @@ public class FeedbackController {
     public FeedbackController(){
         try{
         db.connect();
-        db.getcon();
+        con = db.getcon();
         }catch(ClassNotFoundException ex){
             ex.printStackTrace();
         }

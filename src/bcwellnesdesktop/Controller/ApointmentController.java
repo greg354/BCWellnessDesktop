@@ -20,7 +20,7 @@ public class ApointmentController {
     public ApointmentController(){
         try{
         db.connect();
-        db.getcon();
+        con = db.getcon();
         }catch(ClassNotFoundException ex){
             ex.printStackTrace();
         }
