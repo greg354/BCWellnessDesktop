@@ -71,8 +71,23 @@ public class CounselorPanel extends javax.swing.JPanel {
         });
         btnEdit = createStyledButton("Edit Counselor");
         btnEdit.addActionListener(e -> {
-            CounselorInput form = new CounselorInput();
-            form.setVisible(true);
+        int selectedRow = tblapp.getSelectedRow();
+        if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select an appointment to edit.");
+        return;
+        }
+        int id =  Integer.parseInt((String) tblapp.getValueAt(selectedRow, 0)) ;
+        String studentName = (String) tblapp.getValueAt(selectedRow, 1);
+        String specialization = (String) tblapp.getValueAt(selectedRow, 2);
+        String availability = (String) tblapp.getValueAt(selectedRow, 3);
+        
+        CounselorInput frame = new CounselorInput();
+        
+        frame.txtName.setText(studentName);
+        frame.txtSpecialization.setText(specialization);
+        frame.cmbAvailability.setSelectedItem(availability);
+        frame.setTitle("Edditing appointment for: " + id);
+        frame.setVisible(true);
         });
         btnDelete = createStyledButton("Delete Counselor");
 

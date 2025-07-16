@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -44,6 +46,31 @@ public class FeedbackController {
             ex.printStackTrace();
         }
         return dlist;
-    }    
+    } 
+    public void updateFeedback(int id, String name, int rating, String comments){
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(
+            "UPDATE Feedback SET "+
+            "studentName = ?,"+
+            "rating = ?, " +
+            "comments = ? " +
+            "WHERE id = ?");
+            ps.setString(1, name);
+            ps.setInt(2, rating);
+            ps.setString(3, comments);
+            ps.setInt(4, id);
+            
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+         ex.printStackTrace();
+        } catch (IllegalArgumentException ex) {
+         // Handles bad date/time formatting
+        JOptionPane.showMessageDialog(null,
+                "Invalid date or time format. Please use YYYY-MM-DD for date and HH:MM:SS for time.",
+                "Input Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
 

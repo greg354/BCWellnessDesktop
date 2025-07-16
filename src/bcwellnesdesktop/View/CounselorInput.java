@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.Controller.CounselorController;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -41,6 +42,16 @@ public class CounselorInput extends javax.swing.JFrame {
         styleCombo(cmbAvailability, font);
 
         btnSave = createStyledButton("Save");
+        btnSave.addActionListener(e -> {
+           CounselorController controller = new CounselorController();
+           int id = Integer.parseInt(getTitle().split(": ")[1]);
+           String studentName = txtName.getText();
+           String specialization = txtSpecialization.getText();
+           String status = (String) cmbAvailability.getSelectedItem();
+           controller.updateCounselor(id, studentName, specialization, status);
+           
+           
+        });
 
         gbc.gridy = 0;
         addRow(lblName, txtName, gbc);

@@ -7,9 +7,11 @@ package bcwellnesdesktop.Controller;
 import bcwellnesdesktop.DBConnection;
 import bcwellnesdesktop.View.CounselorPanel;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -47,6 +49,30 @@ public class CounselorController {
             ex.printStackTrace();
         }
         return dlist;
-    } 
+    }
+    public void updateCounselor(int id, String name, String special, String availability){
+        try{
+            PreparedStatement ps = con.prepareStatement(
+            "UPDATE Counselors SET "+
+            "name = ?,"+
+            "specialization = ?, " +
+            "availability = ? " +
+            "WHERE id = ?");
+            ps.setString(1, name);
+            ps.setString(2, special);
+            ps.setString(3, availability);
+            ps.setInt(4, id);
+            
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+         ex.printStackTrace();
+        } catch (IllegalArgumentException ex) {
+         // Handles bad date/time formatting
+        JOptionPane.showMessageDialog(null,
+                "Invalid date or time format. Please use YYYY-MM-DD for date and HH:MM:SS for time.",
+                "Input Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
 }

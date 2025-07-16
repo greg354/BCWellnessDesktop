@@ -83,7 +83,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         btnEdit = createStyledButton("Edit Appointment");
         btnEdit.addActionListener(e -> {
             
-            int selectedRow = tblapp.getSelectedRow();
+        int selectedRow = tblapp.getSelectedRow();
         if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Please select an appointment to edit.");
         return;
@@ -96,6 +96,8 @@ public class AppointmentPanel extends javax.swing.JPanel {
         String status = (String) tblapp.getValueAt(selectedRow, 5);
         
         AppointmentInput frame = new AppointmentInput();
+        
+        frame.setTitle("Edditing appointment for: " + id);
         
         frame.txtStudentNum.setText(studentNumber);
         frame.txtCounselor.setText(counselor);
@@ -111,6 +113,8 @@ public class AppointmentPanel extends javax.swing.JPanel {
         buttonPanel.add(btnEdit);
         buttonPanel.add(btnDelete);
 
+        
+        
         add(buttonPanel, BorderLayout.SOUTH);
         
         /*controller.loadAppointments();*/

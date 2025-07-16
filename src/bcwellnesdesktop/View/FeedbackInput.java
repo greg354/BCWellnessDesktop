@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.Controller.FeedbackController;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -10,9 +11,7 @@ import java.awt.*;
  * @author marku
  */
 public class FeedbackInput extends javax.swing.JFrame {
-    public JTextField txtStudentNum;
     public JTextField txtFullName;
-    public JTextField txtHelpedBy;
     public JComboBox<Integer> cmbRating;
     public JTextArea txtComments;
     public JButton btnSave;
@@ -21,7 +20,7 @@ public class FeedbackInput extends javax.swing.JFrame {
      */
     public FeedbackInput() {
         setTitle("Feedback Form");
-        setSize(450, 400);
+        setSize(450, 350);
         setLocationRelativeTo(null);
         setLayout(new GridBagLayout());
         getContentPane().setBackground(new Color(60, 63, 65));
@@ -32,20 +31,14 @@ public class FeedbackInput extends javax.swing.JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 20, 10, 20);
 
-        JLabel lblStudent = createLabel("Student Number:", font);
-        txtStudentNum = createTextField(font);
-
         JLabel lblFullName = createLabel("Full Name:", font);
         txtFullName = createTextField(font);
-
-        JLabel lblHelpedBy = createLabel("Helped By:", font);
-        txtHelpedBy = createTextField(font);
 
         JLabel lblRating = createLabel("Rating (1-5):", font);
         cmbRating = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5});
         styleCombo(cmbRating, font);
 
-        JLabel lblComments = createLabel("Description:", font);
+        JLabel lblComments = createLabel("Comments:", font);
         txtComments = new JTextArea(4, 25);
         txtComments.setFont(font);
         txtComments.setLineWrap(true);
@@ -53,11 +46,18 @@ public class FeedbackInput extends javax.swing.JFrame {
         JScrollPane scroll = new JScrollPane(txtComments);
 
         btnSave = createStyledButton("Submit");
-
+        btnSave.addActionListener(e -> {
+           FeedbackController controller = new FeedbackController();
+           int id = Integer.parseInt(getTitle().split(": ")[1]);
+           String studentName = txtFullName.getText();
+           String comments = txtComments.getText();
+           int rating = (Integer)  cmbRating.getSelectedItem();
+           controller.updateFeedback(id, studentName, rating, comments);
+           
+           
+        });
         gbc.gridy = 0;
-        addRow(lblStudent, txtStudentNum, gbc);
         addRow(lblFullName, txtFullName, gbc);
-        addRow(lblHelpedBy, txtHelpedBy, gbc);
         addRow(lblRating, cmbRating, gbc);
 
         gbc.gridx = 0;

@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.sql.PreparedStatement;
 
 
 /**
@@ -36,10 +37,7 @@ public class ApointmentController {
         }
     }
     
-   
 
-    
-    
     public ArrayList<String[]> appview(){
         ArrayList<String[]> dlist = new ArrayList<>();
         try{
@@ -63,6 +61,46 @@ public class ApointmentController {
         return dlist;
     }
 
-    
+    public void updateAppointment(
+    int id,
+    String studentName,
+    String counselorName,
+    String dateStr,
+    String timeStr,
+    String status
+    ) {
+        try {
+            PreparedStatement ps = con.prepareStatement(
+                "UPDATE Appointments SET " +
+                "studentName = ?, " +
+                "counselorName = ?, " +
+                "appointmentDate = ?, " +
+                "appointmentTime = ?, " +
+                "status = ? " +
+                "WHERE id = ?"
+        );
+
+            java.sql.Date sqlDate = java.sql.Date.valueOf(dateStr);
+            java.sql.Time sqlTime = java.sql.Time.valueOf(timeStr);
+
+            ps.setString(1, studentName);
+            ps.setString(2, counselorName);
+            ps.setDate(3, sqlDate);
+            ps.setTime(4, sqlTime);
+            ps.setString(5, status);
+            ps.setInt(6, id);
+
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+         ex.printStackTrace();
+        } catch (IllegalArgumentException ex) {
+         // Handles bad date/time formatting
+        JOptionPane.showMessageDialog(null,
+                "Invalid date or time format. Please use YYYY-MM-DD for date and HH:MM:SS for time.",
+                "Input Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+}
 
 }

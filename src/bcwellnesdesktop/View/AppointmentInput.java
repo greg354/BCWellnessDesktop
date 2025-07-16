@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.Controller.ApointmentController;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -12,15 +13,16 @@ import java.awt.*;
 public class AppointmentInput extends javax.swing.JFrame {
     public JTextField txtStudentNum;
     public JTextField txtCounselor;
-    public JTextField txtReason;
     public JTextField txtDate;
     public JTextField txtTime;
     public JComboBox<String> cmbStatus;
     public JButton btnSave;
+    private int appointmentID = -1;
     /**
      * Creates new form AppointmentInput
      */
     public AppointmentInput() {
+        
         setTitle("Appointment Form");
         setSize(400, 400);
         setLocationRelativeTo(null);
@@ -40,9 +42,6 @@ public class AppointmentInput extends javax.swing.JFrame {
         JLabel lblCounselor = createLabel("Counselor:", font);
         txtCounselor = createTextField(font);
 
-        JLabel lblReason = createLabel("Reason:", font);
-        txtReason = createTextField(font);
-
         JLabel lblDate = createLabel("Date (YYYY-MM-DD):", font);
         txtDate = createTextField(font);
 
@@ -54,11 +53,22 @@ public class AppointmentInput extends javax.swing.JFrame {
         styleCombo(cmbStatus, font);
 
         btnSave = createStyledButton("Save");
+        btnSave.addActionListener(e -> {
+           ApointmentController ac = new ApointmentController();
+           int id = Integer.parseInt(getTitle().split(": ")[1]);
+           String studentNumber = txtStudentNum.getText();
+           String counselor = txtCounselor.getText();
+           String date = txtDate.getText();
+           String time = txtTime.getText();
+           String status = (String) cmbStatus.getSelectedItem();
+           ac.updateAppointment(id, studentNumber, counselor, date, time, status);
+           
+           
+        });
 
         gbc.gridy = 0;
         addRow(lblStudent, txtStudentNum, gbc);
         addRow(lblCounselor, txtCounselor, gbc);
-        addRow(lblReason, txtReason, gbc);
         addRow(lblDate, txtDate, gbc);
         addRow(lblTime, txtTime, gbc);
         addRow(lblStatus, cmbStatus, gbc);

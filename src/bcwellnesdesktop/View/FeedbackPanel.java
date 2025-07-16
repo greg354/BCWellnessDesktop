@@ -65,13 +65,28 @@ public class FeedbackPanel extends javax.swing.JPanel {
 
         btnView = createStyledButton("Add Feedback");
         btnView.addActionListener(e -> {
-            FeedbackInput form = new FeedbackInput();
-            form.setVisible(true);
+            FeedbackInput frame = new FeedbackInput();
+            frame.setVisible(true);
         });
         btnEdit = createStyledButton("Edit Feedback");
         btnEdit.addActionListener(e -> {
-            FeedbackInput form = new FeedbackInput();
-            form.setVisible(true);
+            int selectedRow = tblapp.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select an appointment to edit.");
+                return;
+            }
+            int id =  Integer.parseInt((String) tblapp.getValueAt(selectedRow, 0)) ;
+            String studentName = (String) tblapp.getValueAt(selectedRow, 1);
+            String rating = (String) tblapp.getValueAt(selectedRow, 2);
+            String comments = (String) tblapp.getValueAt(selectedRow, 3);
+            
+            FeedbackInput frame = new FeedbackInput();
+            
+            frame.txtFullName.setText(studentName);
+            frame.cmbRating.setSelectedItem(Integer.parseInt(rating));
+            frame.txtComments.setText(comments);
+            frame.setTitle("Edditing appointment for: " + id);
+            frame.setVisible(true);
         });
         btnDelete = createStyledButton("Delete Feedback");
 
