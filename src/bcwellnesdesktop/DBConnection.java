@@ -58,25 +58,6 @@ public class DBConnection {
         }
         return dlist;
     }
-    public ArrayList<String[]> cview(){
-        ArrayList<String[]> dlist = new ArrayList<>();
-        try{
-            String qry = "SELECT * FROM COUNSELORS";
-            ResultSet table = this.con.createStatement().executeQuery(qry);
-            while(table.next()){
-               String ID = table.getString("ID");
-               String stdname = table.getString("NAME");
-               String cname = table.getString("SPECIALIZATION");
-               String date = table.getString("AVAILABILITY");
-               String[] row = {ID,stdname,cname,date};
-               dlist.add(row);
-            }
-            
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return dlist;
-    }  
 }
    
    
