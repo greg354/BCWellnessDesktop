@@ -5,6 +5,7 @@
 package bcwellnesdesktop.Controller;
 
 import bcwellnesdesktop.DBConnection;
+import bcwellnesdesktop.View.FeedbackPanel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
  * @author Iwang
  */
 public class FeedbackController {
+    protected FeedbackPanel view;
     Connection con;
     DBConnection db = new DBConnection();
     public FeedbackController(){
@@ -47,6 +49,18 @@ public class FeedbackController {
         }
         return dlist;
     } 
+    
+    public void deleteFeedback(int id){
+        try{
+            PreparedStatement ps = con.prepareStatement("DELETE FROM Feedback WHERE id = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(view, "Error deleting appointment.");
+        }
+    }
+    
     public void updateFeedback(int id, String name, int rating, String comments){
         
         try{

@@ -91,6 +91,23 @@ public class FeedbackPanel extends javax.swing.JPanel {
             frame.setVisible(true);
         });
         btnDelete = createStyledButton("Delete Feedback");
+        btnDelete.addActionListener(e ->{
+        int selectedRow = tblf.getSelectedRow(); 
+        if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a feedback to delete.");
+        return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to delete this feedback?",
+            "Confirm Deletion",
+            JOptionPane.YES_NO_OPTION);
+
+         if (confirm != JOptionPane.YES_OPTION) return;
+        
+        int id =  Integer.parseInt((String) tblf.getValueAt(selectedRow, 0)) ;
+        fc.deleteFeedback(id);
+        });
 
         buttonPanel.add(btnView);
         buttonPanel.add(btnEdit);

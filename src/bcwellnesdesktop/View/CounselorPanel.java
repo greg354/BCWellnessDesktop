@@ -87,11 +87,27 @@ public class CounselorPanel extends javax.swing.JPanel {
         frame.txtName.setText(studentName);
         frame.txtSpecialization.setText(specialization);
         frame.cmbAvailability.setSelectedItem(availability);
-        frame.setTitle("Edditing appointment for: " + id);
+        frame.setTitle("Edditing counselor for: " + id);
         frame.setVisible(true);
         });
         btnDelete = createStyledButton("Delete Counselor");
+        btnDelete.addActionListener(e ->{
+        int selectedRow = tblc.getSelectedRow(); 
+        if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select an counselor to delete.");
+        return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to delete this counselor?",
+            "Confirm Deletion",
+            JOptionPane.YES_NO_OPTION);
 
+         if (confirm != JOptionPane.YES_OPTION) return;
+        
+        int id =  Integer.parseInt((String) tblc.getValueAt(selectedRow, 0)) ;
+        councontroller.deleteCounselor(id);
+        });
         buttonPanel.add(btnAdd);
         buttonPanel.add(btnEdit);
         buttonPanel.add(btnDelete);

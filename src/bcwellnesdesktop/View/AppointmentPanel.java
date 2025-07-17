@@ -110,6 +110,23 @@ public class AppointmentPanel extends javax.swing.JPanel {
         frame.setVisible(true);
         });
         btnDelete = createStyledButton("Delete Appointment");
+        btnDelete.addActionListener(e ->{
+        int selectedRow = tblapp.getSelectedRow(); 
+        if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select an appointment to edit.");
+        return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to delete this appointment?",
+            "Confirm Deletion",
+            JOptionPane.YES_NO_OPTION);
+
+         if (confirm != JOptionPane.YES_OPTION) return;
+        
+        int id =  Integer.parseInt((String) tblapp.getValueAt(selectedRow, 0)) ;
+        ac.deleteAppointment(id);
+        });
 
         buttonPanel.add(btnAdd);
         buttonPanel.add(btnEdit);

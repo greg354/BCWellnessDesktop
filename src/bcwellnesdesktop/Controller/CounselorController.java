@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  * @author marku
  */
 public class CounselorController {
-    
+    protected CounselorPanel view;
     Connection con;
     DBConnection db = new DBConnection();
     public CounselorController(){
@@ -53,6 +53,18 @@ public class CounselorController {
         }
         return dlist;
     }
+    
+    public void deleteCounselor(int id){
+        try{
+            PreparedStatement ps = con.prepareStatement("DELETE FROM Counselors WHERE id = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(view, "Error deleting appointment.");
+        }
+    }
+    
     public void updateCounselor(int id, String name, String special, String availability){
         try{
             PreparedStatement ps = con.prepareStatement(

@@ -64,7 +64,16 @@ public class ApointmentController {
         }
         return dlist;
     }
-
+    public void deleteAppointment(int id){
+        try{
+            PreparedStatement ps = con.prepareStatement("DELETE FROM Appointments WHERE id = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(view, "Error deleting appointment.");
+        }
+    }
     public void updateAppointment(
     int id,
     String studentName,
