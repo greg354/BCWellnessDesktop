@@ -82,7 +82,7 @@ public class FeedbackPanel extends javax.swing.JPanel {
             String rating = (String) tblf.getValueAt(selectedRow, 2);
             String comments = (String) tblf.getValueAt(selectedRow, 3);
             
-            FeedbackEdit frame = new FeedbackEdit();
+            FeedbackEdit frame = new FeedbackEdit(this);
             
             frame.txtFullName.setText(studentName);
             frame.cmbRating.setSelectedItem(Integer.parseInt(rating));
@@ -105,8 +105,12 @@ public class FeedbackPanel extends javax.swing.JPanel {
 
          if (confirm != JOptionPane.YES_OPTION) return;
         
-        int id =  Integer.parseInt((String) tblf.getValueAt(selectedRow, 0)) ;
-        fc.deleteFeedback(id);
+        String id = tblf.getValueAt(selectedRow, 0).toString();
+            try {
+                fc.deleteFeedback(id,this.tblf);
+            } catch (ClassNotFoundException ex) {
+                System.getLogger(FeedbackPanel.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         });
 
         buttonPanel.add(btnView);

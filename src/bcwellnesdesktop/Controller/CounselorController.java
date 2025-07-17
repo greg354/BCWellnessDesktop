@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -54,11 +55,12 @@ public class CounselorController {
         return dlist;
     }
     
-    public void deleteCounselor(int id){
+    public void deleteCounselor(String id,JTable tbl) throws ClassNotFoundException{
         try{
             PreparedStatement ps = con.prepareStatement("DELETE FROM Counselors WHERE id = ?");
-            ps.setInt(1, id);
+            ps.setString(1, id);
             ps.executeUpdate();
+            db.reloadc(tbl);
         }catch (SQLException ex) {
         ex.printStackTrace();
         JOptionPane.showMessageDialog(view, "Error deleting appointment.");

@@ -82,7 +82,7 @@ public class CounselorPanel extends javax.swing.JPanel {
         String specialization = (String) tblc.getValueAt(selectedRow, 2);
         String availability = (String) tblc.getValueAt(selectedRow, 3);
         
-        CounselorEdit frame = new CounselorEdit();
+        CounselorEdit frame = new CounselorEdit(this);
         
         frame.txtName.setText(studentName);
         frame.txtSpecialization.setText(specialization);
@@ -105,8 +105,12 @@ public class CounselorPanel extends javax.swing.JPanel {
 
          if (confirm != JOptionPane.YES_OPTION) return;
         
-        int id =  Integer.parseInt((String) tblc.getValueAt(selectedRow, 0)) ;
-        councontroller.deleteCounselor(id);
+        String id = tblc.getValueAt(selectedRow, 0).toString();
+            try {
+                councontroller.deleteCounselor(id,this.tblc);
+            } catch (ClassNotFoundException ex) {
+                System.getLogger(CounselorPanel.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         });
         buttonPanel.add(btnAdd);
         buttonPanel.add(btnEdit);

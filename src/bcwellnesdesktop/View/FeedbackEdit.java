@@ -21,7 +21,8 @@ public class FeedbackEdit extends javax.swing.JFrame {
      * Creates new form FeedbackEdit
      */
     DBConnection db = new DBConnection();
-    public FeedbackEdit() {
+    public FeedbackEdit(FeedbackPanel parent) {
+        this.parent = parent;
         FeedbackController fc = new FeedbackController();
         setTitle("Feedback Form");
         setSize(450, 350);

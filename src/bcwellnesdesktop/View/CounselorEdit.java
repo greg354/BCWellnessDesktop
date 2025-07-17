@@ -21,7 +21,8 @@ public class CounselorEdit extends javax.swing.JFrame {
      * Creates new form CounselorEdit
      */
     DBConnection db = new DBConnection();
-    public CounselorEdit() {
+    public CounselorEdit(CounselorPanel parent) {
+        this.parent = parent;
         CounselorController cc = new CounselorController();
         setTitle("Counselor Form");
         setSize(400, 300);

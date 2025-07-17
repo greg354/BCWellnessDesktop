@@ -90,14 +90,23 @@ public class AppointmentPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Please select an appointment to edit.");
         return;
         }
-        int id =  Integer.parseInt((String) tblapp.getValueAt(selectedRow, 0)) ;
-        String studentNumber = (String) tblapp.getValueAt(selectedRow, 1);
-        String counselor = (String) tblapp.getValueAt(selectedRow, 2);
-        String date = (String) tblapp.getValueAt(selectedRow, 3);
-        String time = (String) tblapp.getValueAt(selectedRow, 4);
-        String status = (String) tblapp.getValueAt(selectedRow, 5);
+        String id = tblapp.getValueAt(selectedRow, 0).toString();
+        Object studentRaw = tblapp.getValueAt(selectedRow, 1);
+        String studentNumber = studentRaw.toString();
+
+        Object counselorRaw = tblapp.getValueAt(selectedRow, 2);
+        String counselor = counselorRaw.toString();
+
+        Object dateRaw = tblapp.getValueAt(selectedRow, 3);
+        String date = dateRaw.toString();
+
+        Object timeRaw = tblapp.getValueAt(selectedRow, 4);
+        String time = timeRaw.toString();
+
+        Object statusRaw = tblapp.getValueAt(selectedRow, 5);
+        String status = statusRaw.toString();
         
-        AppointmentEdit frame = new AppointmentEdit();
+        AppointmentEdit frame = new AppointmentEdit(this);
         
         frame.setTitle("Edditing appointment for: " + id);
         
@@ -124,8 +133,12 @@ public class AppointmentPanel extends javax.swing.JPanel {
 
          if (confirm != JOptionPane.YES_OPTION) return;
         
-        int id =  Integer.parseInt((String) tblapp.getValueAt(selectedRow, 0)) ;
-        ac.deleteAppointment(id);
+        String id = tblapp.getValueAt(selectedRow, 0).toString();
+            try {
+                ac.deleteAppointment(id,this.tblapp);
+            } catch (ClassNotFoundException ex) {
+                System.getLogger(AppointmentPanel.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         });
 
         buttonPanel.add(btnAdd);

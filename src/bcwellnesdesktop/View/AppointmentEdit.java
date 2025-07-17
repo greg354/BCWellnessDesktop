@@ -24,8 +24,9 @@ public class AppointmentEdit extends javax.swing.JFrame {
      * Creates new form AppointmentEdit
      */
     DBConnection db = new DBConnection();
-    public AppointmentEdit() {
+    public AppointmentEdit(AppointmentPanel parent) {
        ApointmentController ac = new ApointmentController();
+       this.parent = parent;
         
         setTitle("Appointment Form");
         setSize(400, 400);
@@ -56,7 +57,7 @@ public class AppointmentEdit extends javax.swing.JFrame {
         cmbStatus = new JComboBox<>(new String[]{"Pending", "Confirmed", "Cancelled"});
         styleCombo(cmbStatus, font);
 
-        btnSave = createStyledButton("Save");
+        btnSave = createStyledButton("jhfsdjk");
         btnSave.addActionListener(e -> {
            int id = Integer.parseInt(getTitle().split(": ")[1]);
            String studentName = txtStudentNum.getText();

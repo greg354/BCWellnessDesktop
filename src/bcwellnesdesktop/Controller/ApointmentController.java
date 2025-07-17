@@ -64,11 +64,12 @@ public class ApointmentController {
         }
         return dlist;
     }
-    public void deleteAppointment(int id){
+    public void deleteAppointment(String id,JTable tbl) throws ClassNotFoundException{
         try{
             PreparedStatement ps = con.prepareStatement("DELETE FROM Appointments WHERE id = ?");
-            ps.setInt(1, id);
+            ps.setString(1, id);
             ps.executeUpdate();
+            db.reloadapp(tbl);
         }catch (SQLException ex) {
         ex.printStackTrace();
         JOptionPane.showMessageDialog(view, "Error deleting appointment.");

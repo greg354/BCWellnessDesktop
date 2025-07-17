@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -50,11 +51,12 @@ public class FeedbackController {
         return dlist;
     } 
     
-    public void deleteFeedback(int id){
+    public void deleteFeedback(String id,JTable tbl) throws ClassNotFoundException{
         try{
             PreparedStatement ps = con.prepareStatement("DELETE FROM Feedback WHERE id = ?");
-            ps.setInt(1, id);
+            ps.setString(1, id);
             ps.executeUpdate();
+            db.reloadf(tbl);
         }catch (SQLException ex) {
         ex.printStackTrace();
         JOptionPane.showMessageDialog(view, "Error deleting appointment.");

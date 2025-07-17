@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DBConnection {
     private static final String DRIVER = "org.apache.derby.jdbc.ClientDriver";
-    private static final String JDBC_URL = "jdbc:derby://localhost:1527/WelllnessDB"; //start of db name: WelllnessDB is for Markus, welnessDB is for Iwan
+    private static final String JDBC_URL = "jdbc:derby://localhost:1527/welnessDB"; //start of db name: WelllnessDB is for Markus, welnessDB is for Iwan
     
     Connection con;
     
@@ -42,7 +42,7 @@ public class DBConnection {
     
     public void reloadapp(JTable tbl) throws ClassNotFoundException{
             DefaultTableModel mdl = new DefaultTableModel(
-        new String[]{"studentName", "counselorName", "appointmentDate", "appointmentTime", "status"}, 0
+        new String[]{"id","studentName", "counselorName", "appointmentDate", "appointmentTime", "status"}, 0
         );
         try{
             String sql = "SELECT * FROM Appointments";
@@ -66,7 +66,7 @@ public class DBConnection {
     }
     public void reloadc(JTable tbl) throws ClassNotFoundException{
             DefaultTableModel mdl = new DefaultTableModel(
-        new String[]{"name", "specialization", "availability"}, 0
+        new String[]{"id","name", "specialization", "availability"}, 0
         );
         try{
             String sql = "SELECT * FROM Counselors";
