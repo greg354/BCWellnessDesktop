@@ -4,6 +4,7 @@
  */
 package bcwellnesdesktop.View;
 import bcwellnesdesktop.Controller.CounselorController;
+import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -15,10 +16,14 @@ public class CounselorInput extends javax.swing.JFrame {
     public JTextField txtSpecialization;
     public JComboBox<String> cmbAvailability;
     public JButton btnSave;
+    private CounselorPanel parent;
     /**
      * Creates new form CounselorInput
      */
-    public CounselorInput() {
+    DBConnection db = new DBConnection();
+    public CounselorInput(CounselorPanel parent) {
+        this.parent = parent;
+        CounselorController cc = new CounselorController();
         setTitle("Counselor Form");
         setSize(400, 300);
         setLocationRelativeTo(null);
@@ -43,14 +48,25 @@ public class CounselorInput extends javax.swing.JFrame {
 
         btnSave = createStyledButton("Save");
         btnSave.addActionListener(e -> {
-           CounselorController controller = new CounselorController();
-           int id = Integer.parseInt(getTitle().split(": ")[1]);
-           String studentName = txtName.getText();
-           String specialization = txtSpecialization.getText();
-           String status = (String) cmbAvailability.getSelectedItem();
-           controller.updateCounselor(id, studentName, specialization, status);
-           
-           
+           String cname = txtName.getText();
+           String cspec = txtSpecialization.getText();
+           String a = cmbAvailability.getSelectedItem().toString();
+           cc.cadd(cname,cspec,a);
+            int result = JOptionPane.showConfirmDialog(this, // pops up if successful
+                "Counselor saved successfully!\nClick OK to close.",
+                "Success",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                if(parent != null){
+                    try {
+                        db.reloadc(parent.tblc);
+                    } catch (ClassNotFoundException ex) {
+                        System.getLogger(AppointmentInput.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                }
+                this.dispose(); // close pop-up, this is refering to the input
+            }  
         });
 
         gbc.gridy = 0;

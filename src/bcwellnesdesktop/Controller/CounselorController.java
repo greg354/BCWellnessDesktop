@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -70,6 +73,32 @@ public class CounselorController {
          // Handles bad date/time formatting
         JOptionPane.showMessageDialog(null,
                 "Invalid date or time format. Please use YYYY-MM-DD for date and HH:MM:SS for time.",
+                "Input Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public void cadd(
+        String cname,
+        String cspec,
+        String a){
+        try{
+            PreparedStatement ps = con.prepareStatement(
+            "INSERT INTO COUNSELORS (NAME,SPECIALIZATION,AVAILABILITY)"+
+            "VALUES (?,?,?)");
+            ps.setString(1, cname);
+            ps.setString(2, cspec);
+            ps.setString(3, a);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null,
+            "Counselor saved successfully!",
+            "Success",
+            JOptionPane.INFORMATION_MESSAGE);
+            ps.close();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }catch(IllegalArgumentException ex){
+            JOptionPane.showMessageDialog(null,
+                "idk",
                 "Input Error",
                 JOptionPane.ERROR_MESSAGE);
         }

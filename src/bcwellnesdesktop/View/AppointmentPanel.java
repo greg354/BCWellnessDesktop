@@ -8,13 +8,17 @@ import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author marku
  */
 public class AppointmentPanel extends javax.swing.JPanel {
-    private JTable tblapp;
+    public JTable tblapp;
     private JButton btnEdit;
     private JButton btnAdd;
     private JButton btnDelete;
@@ -22,7 +26,9 @@ public class AppointmentPanel extends javax.swing.JPanel {
     /**
      * Creates new form AppointmentPanel
      */
+    DBConnection db = new DBConnection();
     public AppointmentPanel() {
+
         ApointmentController ac = new ApointmentController();
         String[] colnames = {"ID", "Student Name", "Councelor Name", "Date", "Time", "Status"};
         Object[][] data = ac.appview().toArray(new Object[0][]);
@@ -40,12 +46,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
 
-        
         tblapp = new JTable(data,colnames); //creating the table
-
-         
-        
-
         tblapp.setFillsViewportHeight(true); //table aesthetics 
         tblapp.setBackground(new Color(80, 80, 80));
         tblapp.setForeground(Color.WHITE);
@@ -77,7 +78,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         
         btnAdd = createStyledButton("Add Appointment");
         btnAdd.addActionListener(e -> {
-            AppointmentInput form = new AppointmentInput();
+            AppointmentInput form = new AppointmentInput(this); //don't fucking put this outside the arrow function!
             form.setVisible(true);
         });
         btnEdit = createStyledButton("Edit Appointment");
@@ -95,7 +96,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         String time = (String) tblapp.getValueAt(selectedRow, 4);
         String status = (String) tblapp.getValueAt(selectedRow, 5);
         
-        AppointmentInput frame = new AppointmentInput();
+        AppointmentInput frame = new AppointmentInput(this);
         
         frame.setTitle("Edditing appointment for: " + id);
         

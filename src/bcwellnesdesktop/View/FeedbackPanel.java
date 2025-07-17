@@ -12,7 +12,7 @@ import java.awt.*;
  * @author marku
  */
 public class FeedbackPanel extends javax.swing.JPanel {
-    private JTable tblapp;
+    public JTable tblf;
     private JButton btnView;
     private JButton btnEdit;
     private JButton btnDelete;
@@ -21,6 +21,7 @@ public class FeedbackPanel extends javax.swing.JPanel {
      * Creates new form FeedbackPanel
      */
     public FeedbackPanel() {
+        DBConnection db = new DBConnection();
         FeedbackController fc = new FeedbackController();
         String[] colnames={"ID","Student Name","Rating","Comments"};
         Object[][] data = fc.fview().toArray(new Object[0][]);
@@ -37,15 +38,15 @@ public class FeedbackPanel extends javax.swing.JPanel {
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
 
-        tblapp = new JTable(data,colnames); //creating the table
-        tblapp.setFillsViewportHeight(true); //table aesthetics
-        tblapp.setBackground(new Color(80, 80, 80));
-        tblapp.setForeground(Color.WHITE);
-        tblapp.setGridColor(Color.DARK_GRAY);
-        tblapp.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        tblapp.setRowHeight(24);
+        tblf = new JTable(data,colnames); //creating the table
+        tblf.setFillsViewportHeight(true); //table aesthetics
+        tblf.setBackground(new Color(80, 80, 80));
+        tblf.setForeground(Color.WHITE);
+        tblf.setGridColor(Color.DARK_GRAY);
+        tblf.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tblf.setRowHeight(24);
         
-        JScrollPane scrp = new JScrollPane(tblapp); //adding scroll to our table for better experience
+        JScrollPane scrp = new JScrollPane(tblf); //adding scroll to our table for better experience
         scrp.setPreferredSize(new Dimension(600,300));
         
         GridBagConstraints gbc = new GridBagConstraints(); //Otherwise the table is a small block, now we fit it into the grid
@@ -65,22 +66,22 @@ public class FeedbackPanel extends javax.swing.JPanel {
 
         btnView = createStyledButton("Add Feedback");
         btnView.addActionListener(e -> {
-            FeedbackInput frame = new FeedbackInput();
+            FeedbackInput frame = new FeedbackInput(this);
             frame.setVisible(true);
         });
         btnEdit = createStyledButton("Edit Feedback");
         btnEdit.addActionListener(e -> {
-            int selectedRow = tblapp.getSelectedRow();
+            int selectedRow = tblf.getSelectedRow();
             if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(this, "Please select an appointment to edit.");
+                JOptionPane.showMessageDialog(this, "Please select a comment to edit.");
                 return;
             }
-            int id =  Integer.parseInt((String) tblapp.getValueAt(selectedRow, 0)) ;
-            String studentName = (String) tblapp.getValueAt(selectedRow, 1);
-            String rating = (String) tblapp.getValueAt(selectedRow, 2);
-            String comments = (String) tblapp.getValueAt(selectedRow, 3);
+            int id =  Integer.parseInt((String) tblf.getValueAt(selectedRow, 0)) ;
+            String studentName = (String) tblf.getValueAt(selectedRow, 1);
+            String rating = (String) tblf.getValueAt(selectedRow, 2);
+            String comments = (String) tblf.getValueAt(selectedRow, 3);
             
-            FeedbackInput frame = new FeedbackInput();
+            FeedbackInput frame = new FeedbackInput(this);
             
             frame.txtFullName.setText(studentName);
             frame.cmbRating.setSelectedItem(Integer.parseInt(rating));
@@ -97,7 +98,7 @@ public class FeedbackPanel extends javax.swing.JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
     public JTable getTableFeed() {
-    return tblapp;
+    return tblf;
     }
     public JButton getAddFeed(){
         return btnView;

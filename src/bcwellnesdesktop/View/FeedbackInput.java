@@ -4,6 +4,7 @@
  */
 package bcwellnesdesktop.View;
 import bcwellnesdesktop.Controller.FeedbackController;
+import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -15,10 +16,14 @@ public class FeedbackInput extends javax.swing.JFrame {
     public JComboBox<Integer> cmbRating;
     public JTextArea txtComments;
     public JButton btnSave;
+    private FeedbackPanel parent;
     /**
      * Creates new form FeedbackInput
      */
-    public FeedbackInput() {
+    DBConnection db = new DBConnection();
+    public FeedbackInput(FeedbackPanel parent) {
+        this.parent = parent;
+        FeedbackController fc = new FeedbackController();
         setTitle("Feedback Form");
         setSize(450, 350);
         setLocationRelativeTo(null);
@@ -47,14 +52,25 @@ public class FeedbackInput extends javax.swing.JFrame {
 
         btnSave = createStyledButton("Submit");
         btnSave.addActionListener(e -> {
-           FeedbackController controller = new FeedbackController();
-           int id = Integer.parseInt(getTitle().split(": ")[1]);
-           String studentName = txtFullName.getText();
-           String comments = txtComments.getText();
-           int rating = (Integer)  cmbRating.getSelectedItem();
-           controller.updateFeedback(id, studentName, rating, comments);
-           
-           
+           String sname = txtFullName.getText();
+           int ir = Integer.parseInt(cmbRating.getSelectedItem().toString());
+           String c = txtComments.getText();
+           fc.fadd(sname, ir, c);
+            int result = JOptionPane.showConfirmDialog(this, // pops up if successful
+                "Feedback saved successfully!\nClick OK to close.",
+                "Success",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                if(parent != null){
+                    try {
+                        db.reloadf(parent.tblf);
+                    } catch (ClassNotFoundException ex) {
+                        System.getLogger(AppointmentInput.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                }
+                this.dispose(); // close pop-up, this is refering to the input
+            }  
         });
         gbc.gridy = 0;
         addRow(lblFullName, txtFullName, gbc);

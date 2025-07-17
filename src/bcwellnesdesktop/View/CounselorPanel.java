@@ -12,7 +12,7 @@ import java.awt.*;
  * @author marku
  */
 public class CounselorPanel extends javax.swing.JPanel {
-    private JTable tblapp;
+    public JTable tblc;
     private JButton btnAdd;
     private JButton btnEdit;
     private JButton btnDelete;
@@ -37,15 +37,15 @@ public class CounselorPanel extends javax.swing.JPanel {
         centerPanel.setBackground(new Color(70, 73, 75));
         centerPanel.setLayout(new GridBagLayout());
 
-        tblapp = new JTable(data,colnames); //creating the table
-        tblapp.setFillsViewportHeight(true); //table aesthetics
-        tblapp.setBackground(new Color(80, 80, 80));
-        tblapp.setForeground(Color.WHITE);
-        tblapp.setGridColor(Color.DARK_GRAY);
-        tblapp.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        tblapp.setRowHeight(24);
+        tblc = new JTable(data,colnames); //creating the table
+        tblc.setFillsViewportHeight(true); //table aesthetics
+        tblc.setBackground(new Color(80, 80, 80));
+        tblc.setForeground(Color.WHITE);
+        tblc.setGridColor(Color.DARK_GRAY);
+        tblc.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tblc.setRowHeight(24);
         
-        JScrollPane scrp = new JScrollPane(tblapp); //adding scroll to our table for better experience
+        JScrollPane scrp = new JScrollPane(tblc); //adding scroll to our table for better experience
         scrp.setPreferredSize(new Dimension(600,300));
         
         GridBagConstraints gbc = new GridBagConstraints(); //Otherwise the table is a small block, now we fit it into the grid
@@ -66,22 +66,22 @@ public class CounselorPanel extends javax.swing.JPanel {
 
         btnAdd = createStyledButton("Add Counselor");
         btnAdd.addActionListener(e -> {
-            CounselorInput form = new CounselorInput();
+            CounselorInput form = new CounselorInput(this);
             form.setVisible(true);
         });
         btnEdit = createStyledButton("Edit Counselor");
         btnEdit.addActionListener(e -> {
-        int selectedRow = tblapp.getSelectedRow();
+        int selectedRow = tblc.getSelectedRow();
         if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Please select an appointment to edit.");
         return;
         }
-        int id =  Integer.parseInt((String) tblapp.getValueAt(selectedRow, 0)) ;
-        String studentName = (String) tblapp.getValueAt(selectedRow, 1);
-        String specialization = (String) tblapp.getValueAt(selectedRow, 2);
-        String availability = (String) tblapp.getValueAt(selectedRow, 3);
+        int id =  Integer.parseInt((String) tblc.getValueAt(selectedRow, 0)) ;
+        String studentName = (String) tblc.getValueAt(selectedRow, 1);
+        String specialization = (String) tblc.getValueAt(selectedRow, 2);
+        String availability = (String) tblc.getValueAt(selectedRow, 3);
         
-        CounselorInput frame = new CounselorInput();
+        CounselorInput frame = new CounselorInput(this);
         
         frame.txtName.setText(studentName);
         frame.txtSpecialization.setText(specialization);
@@ -109,7 +109,7 @@ public class CounselorPanel extends javax.swing.JPanel {
         return button;
     }
     public JTable getTableCoun(){
-        return tblapp;
+        return tblc;
     }
     public JButton getAddCoun(){
         return btnAdd;

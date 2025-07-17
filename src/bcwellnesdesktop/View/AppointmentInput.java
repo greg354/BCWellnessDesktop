@@ -4,6 +4,7 @@
  */
 package bcwellnesdesktop.View;
 import bcwellnesdesktop.Controller.ApointmentController;
+import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -18,10 +19,14 @@ public class AppointmentInput extends javax.swing.JFrame {
     public JComboBox<String> cmbStatus;
     public JButton btnSave;
     private int appointmentID = -1;
+    private AppointmentPanel parent;
     /**
      * Creates new form AppointmentInput
      */
-    public AppointmentInput() {
+    DBConnection db = new DBConnection();
+    public AppointmentInput(AppointmentPanel parent) {
+        this.parent = parent;
+        ApointmentController ac = new ApointmentController();
         
         setTitle("Appointment Form");
         setSize(400, 400);
@@ -36,10 +41,10 @@ public class AppointmentInput extends javax.swing.JFrame {
 
         Font font = new Font("Segoe UI", Font.PLAIN, 14);
 
-        JLabel lblStudent = createLabel("Student Number:", font);
+        JLabel lblStudent = createLabel("Student Name:", font);
         txtStudentNum = createTextField(font);
 
-        JLabel lblCounselor = createLabel("Counselor:", font);
+        JLabel lblCounselor = createLabel("Counselor Name:", font);
         txtCounselor = createTextField(font);
 
         JLabel lblDate = createLabel("Date (YYYY-MM-DD):", font);
@@ -54,16 +59,27 @@ public class AppointmentInput extends javax.swing.JFrame {
 
         btnSave = createStyledButton("Save");
         btnSave.addActionListener(e -> {
-           ApointmentController ac = new ApointmentController();
-           int id = Integer.parseInt(getTitle().split(": ")[1]);
-           String studentNumber = txtStudentNum.getText();
+           String studentName = txtStudentNum.getText();
            String counselor = txtCounselor.getText();
-           String date = txtDate.getText();
-           String time = txtTime.getText();
+           String sdate = txtDate.getText();
+           String stime = txtTime.getText();
            String status = (String) cmbStatus.getSelectedItem();
-           ac.updateAppointment(id, studentNumber, counselor, date, time, status);
-           
-           
+           ac.appadd(studentName, counselor, sdate, stime, status);
+            int result = JOptionPane.showConfirmDialog(this, // pops up if successful
+                "Appointment saved successfully!\nClick OK to close.",
+                "Success",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                if(parent != null){
+                    try {
+                        db.reloadapp(parent.tblapp);
+                    } catch (ClassNotFoundException ex) {
+                        System.getLogger(AppointmentInput.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    }
+                }
+                this.dispose(); // close pop-up, this is refering to the input
+            }
         });
 
         gbc.gridy = 0;

@@ -35,10 +35,10 @@ public class FeedbackController {
             while(table.next()){
                String ID = table.getString("ID");
                String stdname = table.getString("STUDENTNAME");
-               String cname = table.getString("RATING");
-               String date = table.getString("COMMENTS");
+               String r = table.getString("RATING");
+               String c = table.getString("COMMENTS");
                
-               String[] row = {ID,stdname,cname,date};
+               String[] row = {ID,stdname,r,c};
                dlist.add(row);
             }
             
@@ -68,6 +68,33 @@ public class FeedbackController {
          // Handles bad date/time formatting
         JOptionPane.showMessageDialog(null,
                 "Invalid date or time format. Please use YYYY-MM-DD for date and HH:MM:SS for time.",
+                "Input Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public void fadd(
+        String sname,
+        int r,
+        String com){
+        try{
+            PreparedStatement ps = con.prepareStatement(
+            "INSERT INTO FEEDBACK (STUDENTNAME,RATING,COMMENTS)"+
+            "VALUES (?,?,?)");
+            ps.setString(1, sname);
+            String sr= Integer.toString(r);
+            ps.setString(2, sr);
+            ps.setString(3, com);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null,
+            "Feedback saved successfully!",
+            "Success",
+            JOptionPane.INFORMATION_MESSAGE);
+            ps.close();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }catch(IllegalArgumentException ex){
+            JOptionPane.showMessageDialog(null,
+                "idk",
                 "Input Error",
                 JOptionPane.ERROR_MESSAGE);
         }

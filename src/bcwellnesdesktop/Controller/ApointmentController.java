@@ -14,8 +14,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
 import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 
 /**
@@ -27,8 +31,8 @@ public class ApointmentController {
     protected AppointmentPanel view;
     Connection con;
     DBConnection db = new DBConnection();
+    
     public ApointmentController(){
-       
         try {
             db.connect();
             con = db.getcon();
@@ -100,7 +104,40 @@ public class ApointmentController {
                 "Invalid date or time format. Please use YYYY-MM-DD for date and HH:MM:SS for time.",
                 "Input Error",
                 JOptionPane.ERROR_MESSAGE);
+        }    
+    }
+    public void appadd(
+    String sname,
+    String cname,
+    String adate,
+    String atime,
+    String status){
+        try{
+            PreparedStatement ps = con.prepareStatement(
+            "INSERT INTO APPOINTMENTS (STUDENTNAME,COUNSELORNAME,APPOINTMENTDATE,APPOINTMENTTIME,STATUS)"+
+            "VALUES (?,?,?,?,?)");
+            SimpleDateFormat tparse = new SimpleDateFormat("hh:mm a");
+            Date parsed = tparse.parse(atime);
+            java.sql.Date sqlDate = java.sql.Date.valueOf(adate);
+            java.sql.Time sqlTime = new java.sql.Time(parsed.getTime());
+            ps.setString(1, sname);
+            ps.setString(2, cname);
+            ps.setDate(3, sqlDate);
+            ps.setTime(4, sqlTime);
+            ps.setString(5,status);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null,
+            "Appointment saved successfully!",
+            "Success",
+            JOptionPane.INFORMATION_MESSAGE);
+            ps.close();
+        }catch(SQLException | ParseException ex){
+            ex.printStackTrace();
+        }catch(IllegalArgumentException ex){
+            JOptionPane.showMessageDialog(null,
+                "Invalid date or time format. Please use YYYY-MM-DD for date and HH:MM:SS for time.",
+                "Input Error",
+                JOptionPane.ERROR_MESSAGE);
         }
-}
-
+    }
 }
