@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DBConnection {
     private static final String DRIVER = "org.apache.derby.jdbc.ClientDriver";
-    private static final String JDBC_URL = "jdbc:derby://localhost:1527/welnessDB"; //start of db name: WelllnessDB is for Markus, welnessDB is for Iwan
+    private static final String JDBC_URL = "jdbc:derby://localhost:1527/WelllnessDB"; //start of db name: WelllnessDB is for Markus, welnessDB is for Iwan
     
     Connection con;
     
@@ -42,21 +42,21 @@ public class DBConnection {
     
     public void reloadapp(JTable tbl) throws ClassNotFoundException{
             DefaultTableModel mdl = new DefaultTableModel(
-        new String[]{"STUDENTNAME", "COUNSELORNAME", "APPOINTMENTDATE", "APPOINTMENTTIME", "STATUS"}, 0
+        new String[]{"studentName", "counselorName", "appointmentDate", "appointmentTime", "status"}, 0
         );
         try{
-            String sql = "SELECT * FROM APPOINTMENTS";
+            String sql = "SELECT * FROM Appointments";
             connect();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 mdl.addRow(new Object[]{
                     rs.getInt("ID"),
-                    rs.getString("STUDENTNAME"),
-                    rs.getString("COUNSELORNAME"),
-                    rs.getDate("APPOINTMENTDATE").toString(),
-                    rs.getTime("APPOINTMENTTIME").toString(),
-                    rs.getString("STATUS")                    
+                    rs.getString("studentName"),
+                    rs.getString("counselorName"),
+                    rs.getDate("appointmentDate").toString(),
+                    rs.getTime("appointmentTime").toString(),
+                    rs.getString("status")                    
                 });
             }
             tbl.setModel(mdl);
@@ -66,19 +66,19 @@ public class DBConnection {
     }
     public void reloadc(JTable tbl) throws ClassNotFoundException{
             DefaultTableModel mdl = new DefaultTableModel(
-        new String[]{"NAME", "SPECIALIZATION", "AVAILABILITY"}, 0
+        new String[]{"name", "specialization", "availability"}, 0
         );
         try{
-            String sql = "SELECT * FROM COUNSELORS";
+            String sql = "SELECT * FROM Counselors";
             connect();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 mdl.addRow(new Object[]{
-                    rs.getInt("ID"),
-                    rs.getString("NAME"),
-                    rs.getString("SPECIALIZATION"),
-                    rs.getString("AVAILABILITY")                   
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("specialization"),
+                    rs.getString("availability")                   
                 });
             }
             tbl.setModel(mdl);
@@ -88,19 +88,19 @@ public class DBConnection {
     }
     public void reloadf(JTable tbl) throws ClassNotFoundException{
         DefaultTableModel mdl = new DefaultTableModel(
-        new String[]{"ID","STUDENTNAME", "RATING", "COMMENTS"}, 0
+        new String[]{"id","studentName", "rating", "comments"}, 0
         );
         try{
-            String sql = "SELECT * FROM FEEDBACK";
+            String sql = "SELECT * FROM Feedback";
             connect();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 mdl.addRow(new Object[]{
-                    rs.getInt("ID"),
-                    rs.getString("STUDENTNAME"),
-                    rs.getInt("RATING"),
-                    rs.getString("COMMENTS")                    
+                    rs.getInt("id"),
+                    rs.getString("studentName"),
+                    rs.getInt("rating"),
+                    rs.getString("comments")                    
                 });
             }
             tbl.setModel(mdl);

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.View.AppointmentEdit;
 import bcwellnesdesktop.Controller.ApointmentController;
 import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
@@ -96,7 +97,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         String time = (String) tblapp.getValueAt(selectedRow, 4);
         String status = (String) tblapp.getValueAt(selectedRow, 5);
         
-        AppointmentInput frame = new AppointmentInput(this);
+        AppointmentEdit frame = new AppointmentEdit();
         
         frame.setTitle("Edditing appointment for: " + id);
         

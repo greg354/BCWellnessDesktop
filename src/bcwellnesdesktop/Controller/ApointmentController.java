@@ -114,7 +114,7 @@ public class ApointmentController {
     String status){
         try{
             PreparedStatement ps = con.prepareStatement(
-            "INSERT INTO APPOINTMENTS (STUDENTNAME,COUNSELORNAME,APPOINTMENTDATE,APPOINTMENTTIME,STATUS)"+
+            "INSERT INTO Appointments (studentName,counselorName,appointmentDate,appointmentTime,status)"+
             "VALUES (?,?,?,?,?)");
             SimpleDateFormat tparse = new SimpleDateFormat("hh:mm a");
             Date parsed = tparse.parse(atime);

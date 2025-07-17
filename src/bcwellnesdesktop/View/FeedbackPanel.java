@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.View.FeedbackEdit;
 import bcwellnesdesktop.Controller.FeedbackController;
 import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
@@ -81,7 +82,7 @@ public class FeedbackPanel extends javax.swing.JPanel {
             String rating = (String) tblf.getValueAt(selectedRow, 2);
             String comments = (String) tblf.getValueAt(selectedRow, 3);
             
-            FeedbackInput frame = new FeedbackInput(this);
+            FeedbackEdit frame = new FeedbackEdit();
             
             frame.txtFullName.setText(studentName);
             frame.cmbRating.setSelectedItem(Integer.parseInt(rating));

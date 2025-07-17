@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package bcwellnesdesktop.View;
+import bcwellnesdesktop.View.CounselorEdit;
 import bcwellnesdesktop.Controller.CounselorController;
 import bcwellnesdesktop.DBConnection;
 import javax.swing.*;
@@ -81,7 +82,7 @@ public class CounselorPanel extends javax.swing.JPanel {
         String specialization = (String) tblc.getValueAt(selectedRow, 2);
         String availability = (String) tblc.getValueAt(selectedRow, 3);
         
-        CounselorInput frame = new CounselorInput(this);
+        CounselorEdit frame = new CounselorEdit();
         
         frame.txtName.setText(studentName);
         frame.txtSpecialization.setText(specialization);
